@@ -12,52 +12,87 @@ class ViewController: UIViewController {
 
     let progressLayer = CAShapeLayer()
     let trackLayer = CAShapeLayer()
+    let pulseLayer = CAShapeLayer()
     let progress = 0.0
     let percentageLabel: UILabel = {
         let label = UILabel()
         label.text = "Start"
         label.textAlignment = .center
         label.font = UIFont.boldSystemFont(ofSize: 32)
+        label.textColor = .white
         return label
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupNotificationObservers()
+        
+        view.backgroundColor = .backgroundColor
+        
         let center = view.center
+        
+        // start angle
+        let circularPath = UIBezierPath(arcCenter: .zero, radius: 100, startAngle: 0, endAngle: .pi * 2, clockwise: true)
+        
+        pulseLayer.path = circularPath.cgPath
+        pulseLayer.strokeColor = UIColor.clear.cgColor
+        pulseLayer.fillColor = UIColor.pulsatingFillColor.cgColor
+        pulseLayer.strokeEnd = 1
+        pulseLayer.lineCap = .round
+        pulseLayer.position = center
+        view.layer.addSublayer(pulseLayer)
+        
+        animatePulseLayer()
+        
+        trackLayer.path = circularPath.cgPath
+        trackLayer.strokeColor = UIColor.trackStrokeColor.cgColor
+        trackLayer.fillColor = UIColor.backgroundColor.cgColor
+        trackLayer.lineWidth = 20
+        trackLayer.strokeEnd = 1
+        trackLayer.lineCap = .round
+        trackLayer.position = center
+        view.layer.addSublayer(trackLayer)
+
+        progressLayer.path = circularPath.cgPath
+        progressLayer.strokeColor = UIColor.outlineStrokeColor.cgColor
+        progressLayer.fillColor = UIColor.clear.cgColor
+        progressLayer.lineWidth = 20
+        progressLayer.strokeEnd = 0
+        progressLayer.lineCap = .round
+        progressLayer.position = center
+        //rotate the thing to start progress on top (12 o' clock):
+        progressLayer.transform = CATransform3DMakeRotation( -.pi / 2, 0, 0, 1)
+        view.layer.addSublayer(progressLayer)
         
         view.addSubview(percentageLabel)
         percentageLabel.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
         percentageLabel.center = center
         
-        // start angle
-        let circularPath = UIBezierPath(arcCenter: .zero, radius: 100, startAngle: -CGFloat.pi / 2, endAngle: 3 * CGFloat.pi / 2, clockwise: true)
-        
-        trackLayer.path = circularPath.cgPath
-        trackLayer.strokeColor = UIColor.gray.cgColor
-        trackLayer.fillColor = UIColor.clear.cgColor
-        trackLayer.lineWidth = 10
-        trackLayer.strokeEnd = 1
-        trackLayer.lineCap = .round
-        trackLayer.position = center
-        
-        view.layer.addSublayer(trackLayer)
-
-        progressLayer.path = circularPath.cgPath
-        progressLayer.strokeColor = UIColor.red.cgColor
-        progressLayer.fillColor = UIColor.clear.cgColor
-        progressLayer.lineWidth = 10
-        progressLayer.strokeEnd = 0
-        progressLayer.lineCap = .round
-        progressLayer.position = center
-
-        //rotate the thing to start progress on top (12 o' clock):
-        progressLayer.transform = CATransform3DMakeRotation( -.pi / 2, 0, 0, 1)
-        view.layer.addSublayer(progressLayer)
-        
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTap)))
     }
+    
+    fileprivate func setupNotificationObservers() {
+        NotificationCenter.default.addObserver(self, selector: #selector(handleEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
+    }
+    
+    @objc private func handleEnterForeground() {
+        animatePulseLayer()
+    }
+    
+    fileprivate func animatePulseLayer() {
+        let animation = CABasicAnimation(keyPath: "transform.scale")
+        
+        animation.toValue = 1.5
+        animation.duration = 1
+        animation.autoreverses = true
+        animation.timingFunction = CAMediaTimingFunction(name: .easeOut)
+        animation.repeatCount = .greatestFiniteMagnitude
+        
+        pulseLayer.add(animation, forKey: "pulse")
+    }
 
+    //isn't actually in use anymore...
     fileprivate func animateProgress(to progress: Double) {
         let basicAnimation = CABasicAnimation(keyPath: "strokeEnd")
         
@@ -76,7 +111,7 @@ class ViewController: UIViewController {
         
     }
     
-    func downloadFile() {
+    private func downloadFile() {
         print("Starting Download...")
         
         let urlString = "https://firebasestorage.googleapis.com/v0/b/firestorechat-e64ac.appspot.com/o/intermediate_training_rec.mp4?alt=media&token=e20261d0-7219-49d2-b32d-367e1606500c"
