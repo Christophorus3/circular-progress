@@ -12,6 +12,8 @@
 		9EF2116122DB772900AE7C1A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9EF2115F22DB772900AE7C1A /* Main.storyboard */; };
 		9EF2116322DB772900AE7C1A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9EF2116222DB772900AE7C1A /* Assets.xcassets */; };
 		9EF2116622DB772900AE7C1A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9EF2116422DB772900AE7C1A /* LaunchScreen.storyboard */; };
+		9EF2116E22DB77C200AE7C1A /* CircleProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF2116D22DB77C200AE7C1A /* CircleProgressView.swift */; };
+		9EF2117022DC74B200AE7C1A /* UIColor+Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF2116F22DC74B200AE7C1A /* UIColor+Colors.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +24,8 @@
 		9EF2116222DB772900AE7C1A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9EF2116522DB772900AE7C1A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9EF2116722DB772900AE7C1A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9EF2116D22DB77C200AE7C1A /* CircleProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleProgressView.swift; sourceTree = "<group>"; };
+		9EF2116F22DC74B200AE7C1A /* UIColor+Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Colors.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,10 +60,12 @@
 			children = (
 				9EF2115B22DB772900AE7C1A /* AppDelegate.swift */,
 				9EF2115D22DB772900AE7C1A /* ViewController.swift */,
+				9EF2116D22DB77C200AE7C1A /* CircleProgressView.swift */,
 				9EF2115F22DB772900AE7C1A /* Main.storyboard */,
 				9EF2116222DB772900AE7C1A /* Assets.xcassets */,
 				9EF2116422DB772900AE7C1A /* LaunchScreen.storyboard */,
 				9EF2116722DB772900AE7C1A /* Info.plist */,
+				9EF2116F22DC74B200AE7C1A /* UIColor+Colors.swift */,
 			);
 			path = CircleProgress;
 			sourceTree = "<group>";
@@ -136,7 +142,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				9EF2115E22DB772900AE7C1A /* ViewController.swift in Sources */,
+				9EF2117022DC74B200AE7C1A /* UIColor+Colors.swift in Sources */,
 				9EF2115C22DB772900AE7C1A /* AppDelegate.swift in Sources */,
+				9EF2116E22DB77C200AE7C1A /* CircleProgressView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
